@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Language Translator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Language Translator</h1>
+
+        <p class="subtitle">
+            Translate text between different languages
+        </p>
+
+        <div class="translator-box">
+
+            <div class="language-box">
+
+                <label for="source">Translate From</label>
+
+                <select id="source">
+
+                    <option value="auto">Auto Detect</option>
+                    <option value="en">English</option>
+                    <option value="mr">Marathi</option>
+                    <option value="hi">Hindi</option>
+                    <option value="gu">Gujarati</option>
+                    <option value="bn">Bengali</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                    <option value="kn">Kannada</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="es">Spanish</option>
+                    <option value="it">Italian</option>
+                    <option value="ja">Japanese</option>
+                    <option value="ko">Korean</option>
+
+                </select>
+
+                <textarea id="inputText"
+                          placeholder="Enter text here..."></textarea>
+
+            </div>
+
+            <div class="arrow">
+                ⇄
+            </div>
+
+            <div class="language-box">
+
+                <label for="target">Translate To</label>
+
+                <select id="target">
+
+                    <option value="en">English</option>
+                    <option value="mr">Marathi</option>
+                    <option value="hi">Hindi</option>
+                    <option value="gu">Gujarati</option>
+                    <option value="bn">Bengali</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                    <option value="kn">Kannada</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="es">Spanish</option>
+                    <option value="it">Italian</option>
+                    <option value="ja">Japanese</option>
+                    <option value="ko">Korean</option>
+
+                </select>
+
+                <textarea id="outputText"
+                          placeholder="Translation will appear here..."
+                          readonly></textarea>
+
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <button onclick="translateText()">
+                Translate
+            </button>
+
+            <button onclick="clearText()" class="clear-btn">
+                Clear
+            </button>
+
+            <button onclick="copyText()" class="copy-btn">
+                Copy
+            </button>
+
+        </div>
+
+        <p id="message"></p>
+
+    </div>
+
+
+    <script>
+
+        async function translateText() {
+
+            const inputText =
+                document.getElementById("inputText").value.trim();
+
+            const source =
+                document.getElementById("source").value;
+
+            const target =
+                document.getElementById("target").value;
+
+            const output =
+                document.getElementById("outputText");
+
+            const message =
+                document.getElementById("message");
+
+
+            if (!inputText) {
+
+                message.innerText =
+                    "Please enter some text.";
+
+                message.style.color = "red";
+
+                return;
+            }
+
+
+            message.innerText = "Translating...";
+            message.style.color = "#333";
+
+
+            try {
+
+                const response = await fetch(
+                    "/translate",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            text: inputText,
+                            source: source,
+                            target: target
+                        })
+                    }
+                );
+
+
+                const data = await response.json();
+
+
+                if (data.success) {
+
+                    output.value = data.translation;
+
+                    message.innerText =
+                        "Translation completed successfully.";
+
+                    message.style.color = "green";
+
+                } else {
+
+                    output.value = "";
+
+                    message.innerText = data.message;
+
+                    message.style.color = "red";
+                }
+
+            } catch (error) {
+
+                output.value = "";
+
+                message.innerText =
+                    "Something went wrong.";
+
+                message.style.color = "red";
+            }
+        }
+
+
+        function clearText() {
+
+            document.getElementById("inputText").value = "";
+
+            document.getElementById("outputText").value = "";
+
+            document.getElementById("message").innerText = "";
+        }
+
+
+        function copyText() {
+
+            const output =
+                document.getElementById("outputText");
+
+
+            if (!output.value) {
+
+                alert(
+                    "There is no translated text to copy."
+                );
+
+                return;
+            }
+
+
+            navigator.clipboard.writeText(output.value);
+
+
+            document.getElementById("message").innerText =
+                "Translation copied!";
+        }
+
+    </script>
+
+</body>
+
+</html>
