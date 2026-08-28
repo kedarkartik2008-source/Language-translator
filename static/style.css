@@ -1,0 +1,188 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #667eea, #764ba2);
+
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.translator-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.language-box {
+    flex: 1;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+select {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    margin-bottom: 12px;
+
+    font-size: 15px;
+}
+
+textarea {
+    width: 100%;
+
+    height: 220px;
+
+    padding: 15px;
+
+    resize: none;
+
+    border: 1px solid #ccc;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+textarea:focus,
+select:focus {
+    border-color: #667eea;
+}
+
+.arrow {
+    font-size: 35px;
+
+    color: #667eea;
+
+    font-weight: bold;
+}
+
+.buttons {
+    margin-top: 25px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+}
+
+button {
+    padding: 12px 25px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    background: #667eea;
+
+    color: white;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #5369d8;
+
+    transform: translateY(-2px);
+}
+
+.clear-btn {
+    background: #e74c3c;
+}
+
+.clear-btn:hover {
+    background: #c0392b;
+}
+
+.copy-btn {
+    background: #27ae60;
+}
+
+.copy-btn:hover {
+    background: #219150;
+}
+
+#message {
+    margin-top: 20px;
+
+    font-weight: bold;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+
+    .translator-box {
+        flex-direction: column;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+    }
+
+    .container {
+        padding: 25px;
+    }
+
+    textarea {
+        height: 160px;
+    }
+
+    .buttons {
+        flex-wrap: wrap;
+    }
+}
